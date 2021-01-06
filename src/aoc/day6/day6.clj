@@ -11,19 +11,11 @@
        (map #(count (set (str/replace % "\n" ""))))
        (reduce +)))
 
-(defn recursive
-  [output input]
-  (if (not (empty? input))
-    (recur (clojure.set/intersection (first input) output) (drop 1 input))
-    output))
-
 (defn part2
   []
   (->> (str/split (slurp "src/aoc/day6/input.txt") #"\n\n")
        (map #(map set (str/split % #"\n")))
-       (map #(if (> (count %) 1)
-               (recursive (clojure.set/intersection (first %) (second %)) (drop 2 %))
-               (first %)))
+       (map #(reduce clojure.set/intersection %))
        (map count)
        (reduce +)))
 
