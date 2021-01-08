@@ -8,14 +8,14 @@
   ;; L=0, R=1
   (let [row-weights [64 32 16 8 4 2 1]
         col-weights [4 2 1]]
-    (into {:row (->> (take 7 seat)
-                     (map #(if (= % \F) 0 1))
-                     (map #(* %1 %2) row-weights)
-                     (reduce +))
+    (into {:row    (->> (take 7 seat)
+                        (map #(if (= % \F) 0 1))
+                        (map #(* %1 %2) row-weights)
+                        (reduce +))
            :column (->> (drop 7 seat)
-                (map #(if (= % \L) 0 1))
-                (map #(* %1 %2) col-weights)
-                (reduce +))})))
+                        (map #(if (= % \L) 0 1))
+                        (map #(* %1 %2) col-weights)
+                        (reduce +))})))
 
 
 (defn part1
@@ -36,7 +36,9 @@
          (map parse-seat)
          (map #(+ (* (:row %) 8) (:column %)))
          (sort)
-         (map #(if (not (= %1 %2)) %1 nil) complete))))
+         (map #(if (not (= %1 %2)) %1 nil) complete)
+         (filter (complement nil?))
+         (first))))
 
 (comment
   (part1)
